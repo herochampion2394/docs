@@ -1,0 +1,77 @@
+---
+title: "Google Workspace"
+description: "Connect Gmail, Calendar, Drive, and Contacts."
+icon: "google"
+---
+
+The Google Workspace connector gives DeskMate access to:
+
+- **Gmail** — read, send, draft on behalf of users
+- **Calendar** — read, create, update, cancel events
+- **Drive** — read and write files
+- **Contacts** — read user directory
+
+Setup is OAuth-only — no Google Cloud project work is required on your side. Most workspaces connect in under three minutes.
+
+## Prerequisites
+
+- You must be a **Google Workspace admin** (a regular Gmail account works for personal testing, but for a real organisation you'll want admin to grant on behalf of the team).
+- Users whose data you want DeskMate to read must be on the same Google Workspace domain as the admin who connects.
+
+## Connect
+
+1. Sign in to your DeskMate workspace as a workspace admin
+2. Open **Workspace → Connectors**
+3. Click **Connect** on the **Google Workspace** tile
+4. Sign in with your Google admin account
+5. On the consent screen, review the permissions and click **Continue**
+6. You're redirected back to DeskMate — the tile turns green
+
+## Verify it's working
+
+Try this in DeskMate chat:
+
+```
+summarise my unread emails from today
+```
+
+You should see a list within a few seconds.
+
+## Scopes requested
+
+| Scope | What it allows |
+|---|---|
+| `gmail.modify` | Read, send, draft, label email |
+| `calendar` | Read and write calendar events |
+| `drive` | Read and write Drive files |
+| `contacts.readonly` | Read user directory |
+| `userinfo.email` / `userinfo.profile` | Identify the user signing in |
+
+DeskMate only reads what your skills explicitly request. We never crawl your Drive or inbox in the background.
+
+## "App not verified" warning
+
+If you see a Google warning that the app isn't verified, this means DeskMate's OAuth verification with Google is still in progress (a one-time process per Google project). You can proceed by clicking **Advanced → Go to DeskMate (unsafe)** — your data is not actually at risk; this is Google's standard warning for any app pending verification.
+
+To remove the warning organisation-wide before that completes, a Google Workspace admin can **whitelist DeskMate** in the admin console:
+
+1. `admin.google.com` → **Security → API controls → App access control**
+2. Add DeskMate as a **Trusted app** by its client ID (we provide the ID on request)
+
+## Troubleshooting
+
+### "redirect_uri_mismatch"
+
+You're using a custom-domain DeskMate workspace and the redirect URI for your subdomain hasn't been added to the Google project. Email <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a> with your workspace subdomain — we'll add it.
+
+### Token expires after one day
+
+We always request `access_type=offline` to get a refresh token. If you're seeing token expiry, the most likely cause is that **the original consent didn't include offline access**. Reconnect by clicking **Disconnect** then **Connect** again.
+
+### Skills can read one user's data but not another's
+
+By default, DeskMate uses each user's own delegated token when they trigger a skill from chat. If user A asks DeskMate to read user B's calendar, that only works if user B has either explicitly shared their calendar with user A in Google Calendar, or if your workspace has set up domain-wide delegation. Email support if you need this.
+
+## Disconnecting
+
+In **Workspace → Connectors**, click **Disconnect** on the Google Workspace tile. To revoke on the Google side, users can visit `https://myaccount.google.com/permissions` and remove the DeskMate app from their account.

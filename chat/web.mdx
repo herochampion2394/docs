@@ -1,0 +1,63 @@
+---
+title: "Use DeskMate on the web"
+description: "Chat with DeskMate from your workspace's admin console."
+icon: "browser"
+---
+
+Every DeskMate workspace has a built-in web chat at `https://<your-workspace>.brightpathaisolutions.com`. You can use it instead of Teams or Slack, or alongside them — conversation history and per-user model preferences are shared across surfaces.
+
+## When to use the web chat
+
+- **Onboarding**: try DeskMate before installing the Teams or Slack bot
+- **Admin tasks**: run skills that don't fit a chat thread (e.g. a long reconciliation report)
+- **Conversation review**: browse and search past conversations in a UI better than a chat scrollback
+- **No Teams/Slack at your company**: use DeskMate as a standalone web app
+
+## Where it lives
+
+Sign in at:
+
+```
+https://<your-workspace>.brightpathaisolutions.com
+```
+
+The chat is on the main page. Past conversations appear in the left sidebar.
+
+## Features
+
+### Conversation history
+
+Every conversation is saved automatically. You can rename, archive, or delete them from the sidebar.
+
+### File uploads
+
+Drag a file into the chat box (PDF, DOCX, XLSX, CSV, image). DeskMate downloads, parses, and uses it as context.
+
+### Switching LLM provider per user
+
+In the chat box, type:
+
+```
+/model gemini
+/model anthropic
+/model openai
+/model reset
+```
+
+Your choice persists across sessions and across chat surfaces (so if you set Gemini in the web chat, the Teams bot will use Gemini for you too).
+
+### Skill runner
+
+The web app's **Skills** tab lets you trigger any skill manually with a form. Useful for running a skill that takes structured inputs (like a date range) you don't want to type in chat.
+
+## Differences from Teams/Slack
+
+| | Web | Teams | Slack |
+|---|---|---|---|
+| Conversation history visible | ✓ | Limited | Limited |
+| File uploads | ✓ | ✓ | ✓ |
+| Approval cards | Inline | Adaptive Card | Inline buttons |
+| `/model` command | ✓ | ✓ | ✓ |
+| Run a skill from a form | ✓ | ✗ | ✗ |
+
+All three surfaces share the same backend, so a skill that's set up once works everywhere.

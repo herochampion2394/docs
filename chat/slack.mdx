@@ -1,0 +1,88 @@
+---
+title: "Use DeskMate in Slack"
+description: "Add the DeskMate Slack app to your workspace."
+icon: "slack"
+---
+
+DeskMate works inside Slack as a bot user. Your team can `@mention` it in a channel or DM it directly.
+
+## Prerequisites
+
+- You must be a **Workspace Owner** or **Workspace Admin** in Slack to install third-party apps (or your admin must have enabled app installs by regular users).
+
+## Step 1 — Install the app
+
+Your BrightPath account manager will send you an **Add to Slack** link. Click it.
+
+Slack will show a consent screen listing the permissions DeskMate requests (see [the Slack connector page](/connectors/slack#permissions-slack-requests) for the full list). Click **Allow**.
+
+You'll be redirected back to DeskMate — the connector tile turns green and the bot is now in your Slack workspace.
+
+## Step 2 — Invite the bot to channels
+
+By default, the bot is installed but not added to any specific channels. To use it in a channel:
+
+```
+/invite @DeskMate
+```
+
+Or, for personal use, just open a direct message with DeskMate from the Slack sidebar.
+
+## Step 3 — Talk to the bot
+
+```
+@DeskMate summarise this week's invoices
+```
+
+Or in a DM, just type the request directly:
+
+```
+summarise this week's invoices
+```
+
+## Features
+
+### File uploads
+
+Upload a file in your chat with DeskMate (PDF, DOCX, XLSX, CSV, image). DeskMate downloads, parses, and uses it as context for your next question.
+
+### Switching LLM provider per user
+
+Each user can pick their own LLM provider:
+
+```
+/model gemini
+/model anthropic
+/model openai
+/model reset
+```
+
+### Approvals
+
+When a skill needs human sign-off, the approval card is posted to the channel where the skill was triggered. Approvers click **Approve** or **Reject** inline — no need to leave Slack.
+
+## Troubleshooting
+
+### Bot doesn't respond when @mentioned
+
+The bot needs to be invited to the channel first:
+
+```
+/invite @DeskMate
+```
+
+### Bot responds in DM but not channels
+
+The `app_mentions:read` Slack permission is missing — the install was done with an old manifest. Ask your account manager for a refreshed install link and reinstall.
+
+### "channel_not_found" when sending notifications
+
+The skill is trying to send a notification to a channel the bot isn't in. Either invite the bot to that channel, or change the skill's notification target.
+
+### Multiple Slack workspaces
+
+DeskMate can only be installed to one Slack workspace per DeskMate workspace. If you have multiple Slack workspaces, you'll need a DeskMate workspace per Slack workspace.
+
+## Uninstalling
+
+In Slack: **Settings → Manage apps → DeskMate → Remove app**. The DeskMate connector will go yellow ("disconnected") within ~30 minutes. To clean up DeskMate's side, click **Disconnect** on the Slack tile in **Workspace → Connectors**.

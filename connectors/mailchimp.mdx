@@ -1,0 +1,75 @@
+---
+title: "Mailchimp"
+description: "Connect Mailchimp for audiences, members, tags, and campaigns."
+icon: "envelopes-bulk"
+---
+
+The Mailchimp connector gives DeskMate access to:
+
+- **Audiences (lists)** — read
+- **Members** — read, upsert, tag, archive
+- **Tags** — read, assign
+- **Campaigns** — read
+
+Setup is one-click OAuth — no Mailchimp developer setup required.
+
+## Prerequisites
+
+- A Mailchimp account with **Owner** or **Admin** role on the workspace
+- At least one audience already created in Mailchimp (DeskMate will read the list of audiences during setup)
+
+## Connect
+
+1. In DeskMate, open **Workspace → Connectors**
+2. Click **Connect** on the **Mailchimp** tile
+3. Sign in to Mailchimp
+4. Click **Allow** on the consent screen
+5. You're redirected back to DeskMate — the tile turns green
+
+<Note>
+  Mailchimp assigns each account to a **data center** (e.g. `us1`, `us21`, `au1`). DeskMate captures this automatically during OAuth — you don't need to enter it.
+</Note>
+
+## Verify it's working
+
+Try this in DeskMate chat:
+
+```
+how many subscribers does our main audience have?
+```
+
+You should see a count within a few seconds.
+
+## Scopes requested
+
+DeskMate uses Mailchimp's OAuth scope by default — this grants access to all audiences, members, and campaigns. Mailchimp doesn't offer finer-grained scopes via OAuth.
+
+## What you can do
+
+- **Add subscribers from a CRM action**: "When a new deal is marked Won in Attio, add the primary contact to the *Customers* audience and tag them with the deal value tier."
+- **Tag and segment**: "Tag everyone who opened the last campaign as *engaged-last-30d*."
+- **Audience hygiene**: "Find subscribers with no opens in 6 months and archive them, after approval."
+
+## The approval rail
+
+Bulk operations against Mailchimp — sending campaigns, archiving large lists, tagging thousands of members — go through DeskMate's approval rail. Each batch is summarised in an Adaptive Card with proposed actions, and only applied after a human approves.
+
+Single-member upserts (typical CRM → Mailchimp sync) run without approval by default. You can change this in **Workspace → Skills → Settings**.
+
+## Troubleshooting
+
+### "audience_not_found" with a valid audience ID
+
+Mailchimp audiences are identified by a short ID per data center. If you copied an audience ID from a different Mailchimp account, it won't resolve. Use the audience picker in DeskMate's skill builder, or paste the audience name and let DeskMate resolve it.
+
+### Members don't appear after upsert
+
+Mailchimp can take up to 60 seconds for newly added members to appear in the UI even after the API returns success. Refresh the Mailchimp audience page after a minute.
+
+### "user already exists" on member add
+
+DeskMate uses **upsert** semantics by default — if the email already exists, it updates rather than creating. If you're seeing this error, your skill is calling `add` instead of `upsert`. Email support and we'll patch the skill.
+
+## Disconnecting
+
+In **Workspace → Connectors**, click **Disconnect**. To revoke at the Mailchimp side, go to **Account → Extras → API keys & integrations** and remove DeskMate.

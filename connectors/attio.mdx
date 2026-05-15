@@ -1,0 +1,74 @@
+---
+title: "Attio"
+description: "Connect Attio for CRM — people, companies, deals, notes, and tasks."
+icon: "address-book"
+---
+
+The Attio connector gives DeskMate access to:
+
+- **People** — read, create, update
+- **Companies** — read, create, update
+- **Deals** (and other custom objects) — read, create, update
+- **Notes** — read, create
+- **Tasks** — read, create
+- **Lists and views** — read
+
+Setup is one-click OAuth — no Attio developer setup required.
+
+## Prerequisites
+
+- An active Attio workspace
+- A user account on that workspace with **Admin** or **Member** role (read-only users can connect, but write operations will fail)
+
+## Connect
+
+1. In DeskMate, open **Workspace → Connectors**
+2. Click **Connect** on the **Attio** tile
+3. Sign in to Attio
+4. Pick the workspace to connect (Attio supports multi-workspace users)
+5. Click **Authorize**
+6. You're redirected back to DeskMate — the tile turns green
+
+## Verify it's working
+
+Try this in DeskMate chat:
+
+```
+find the company "Acme" in our CRM
+```
+
+You should see a result within a few seconds, with deal status and people associated.
+
+## Scopes requested
+
+DeskMate requests Attio's standard `record_permission` scope — read and write access to records across all standard objects (people, companies, deals) plus your custom objects.
+
+## Custom objects
+
+If your Attio workspace has custom objects (e.g. "Properties", "Contracts"), DeskMate will see them automatically. You can ask DeskMate about them by name:
+
+```
+list all properties in the "Sydney" segment
+```
+
+## The approval rail
+
+Write operations to Attio — creating people, updating deal stages, adding notes — go through DeskMate's approval rail by default. You can override on a per-skill basis in **Workspace → Skills → Settings** if a skill is well-trusted and runs frequently (e.g. "log every inbound email as a note on the matching person").
+
+## Troubleshooting
+
+### "Forbidden" when creating records
+
+The connected Attio user has only read-only access. In Attio → **Settings → Members**, upgrade their role to **Member** or **Admin**.
+
+### Records appear in DeskMate but not in Attio UI
+
+Make sure DeskMate is connected to the right Attio workspace. If you have multiple, click **Disconnect** and reconnect, then pick the correct one at the Attio consent screen.
+
+### Custom object not visible
+
+DeskMate caches the list of objects per workspace for ~10 minutes. If you just created a custom object in Attio, wait a few minutes or click **Disconnect → Connect** to force a refresh.
+
+## Disconnecting
+
+In **Workspace → Connectors**, click **Disconnect**. To revoke at the Attio side, go to **Settings → Workspace → Integrations** and remove DeskMate.

@@ -1,0 +1,79 @@
+---
+title: "Xero"
+description: "Connect Xero for invoicing, contacts, bank transactions, and chart of accounts."
+icon: "dollar-sign"
+---
+
+The Xero connector gives DeskMate access to:
+
+- **Invoices** — read, create, send
+- **Contacts** — read, create, update
+- **Bank transactions** — read, propose reconciliations (with approval)
+- **Chart of accounts** — read
+- **Tracking categories, tax rates, items** — read
+
+Setup is one-click OAuth — no Xero developer console work required.
+
+## Prerequisites
+
+- You must be a user on the Xero organisation you want to connect, with at least **Standard** permissions. Read-only Xero users can connect but only read primitives will work.
+- Each DeskMate workspace can connect to one Xero organisation. If you have multiple Xero organisations (a separate file per legal entity, for example), connect each as its own DeskMate workspace.
+
+## Connect
+
+1. In DeskMate, open **Workspace → Connectors**
+2. Click **Connect** on the **Xero** tile
+3. Sign in to Xero
+4. Pick the organisation you want to grant access to
+5. Click **Allow access**
+6. You're redirected back to DeskMate — the tile turns green
+
+## Verify it's working
+
+Try this in DeskMate chat:
+
+```
+show me the last 5 unpaid invoices
+```
+
+You should see them within a few seconds, with amounts, due dates, and contact names.
+
+## Scopes requested
+
+```
+offline_access accounting.transactions accounting.contacts accounting.settings
+accounting.reports.read accounting.attachments accounting.journals.read
+```
+
+These cover everything DeskMate's accounting skills do. We never request `accounting.transactions.write` for primitives that go directly against the GL — anything that posts to your books goes through the **approval rail** first.
+
+## The approval rail (important)
+
+Skills that **write** to Xero — creating invoices, reconciling bank lines, paying bills — never act silently. Instead, DeskMate generates an Adaptive Card with each proposed action and a confidence score, and posts it to Teams or Slack for an authorised approver.
+
+The approver clicks **Approve** or **Reject** on each card; only approved actions get written to Xero. Rejected actions are dropped. You can adjust confidence thresholds and who counts as an approver in **Workspace → Skills → Settings**.
+
+## Troubleshooting
+
+### "Xero not connected" when you can see the connector is green
+
+Most often this means the **refresh token expired** (Xero rotates refresh tokens every 60 days of inactivity). Click **Disconnect** then **Connect** again.
+
+### "Forbidden" on invoice creation
+
+The connected Xero user doesn't have invoice-creation permission. Either:
+
+- Upgrade that user's role in Xero (**Settings → Users**), or
+- Reconnect using a Xero account that has at least **Standard** or **Adviser** role
+
+### Multiple Xero organisations — wrong one is connected
+
+Click **Disconnect**, then **Connect** again and choose the correct organisation at the Xero consent screen.
+
+### "TenantId not found" in logs
+
+The Xero tenant ID (different from Azure tenant ID — Xero uses the term too) wasn't saved during OAuth. Disconnect and reconnect. If it happens repeatedly, email support.
+
+## Disconnecting
+
+In **Workspace → Connectors**, click **Disconnect**. To revoke at the Xero side too, go to `https://my.xero.com` → **Connected apps** and remove DeskMate.

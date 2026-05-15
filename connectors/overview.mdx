@@ -1,0 +1,62 @@
+---
+title: "Connectors overview"
+description: "Every system DeskMate can talk to, and what setup each one needs."
+icon: "plug"
+---
+
+A **connector** is the secure link between your DeskMate workspace and one of your business systems. Connectors handle authentication, token refresh, rate limits, and data normalisation — so that the skills your team writes only deal with clean, consistent data.
+
+## Supported connectors
+
+<CardGroup cols={2}>
+  <Card title="Microsoft 365" icon="microsoft" href="/connectors/microsoft-365">
+    Outlook Mail, Calendar, Teams chats, OneDrive, SharePoint. Required for Teams chat bot.
+  </Card>
+  <Card title="Google Workspace" icon="google" href="/connectors/google-workspace">
+    Gmail, Calendar, Drive, Contacts.
+  </Card>
+  <Card title="Xero" icon="dollar-sign" href="/connectors/xero">
+    Invoices, contacts, bank transactions, chart of accounts.
+  </Card>
+  <Card title="QuickBooks Online" icon="dollar-sign" href="/connectors/quickbooks">
+    Customers, invoices, expenses, reports.
+  </Card>
+  <Card title="MYOB AccountRight" icon="dollar-sign" href="/connectors/myob">
+    Customers, invoices, journal entries.
+  </Card>
+  <Card title="Attio" icon="address-book" href="/connectors/attio">
+    CRM — people, companies, deals, notes, tasks.
+  </Card>
+  <Card title="Mailchimp" icon="envelopes-bulk" href="/connectors/mailchimp">
+    Audiences, members, tags, campaigns.
+  </Card>
+  <Card title="Slack" icon="slack" href="/connectors/slack">
+    Used as the chat surface for DeskMate (not as a data source).
+  </Card>
+</CardGroup>
+
+## How setup typically goes
+
+Most connectors follow the same pattern:
+
+1. **In your provider's admin console** — confirm an admin has the rights to install third-party apps.
+2. **In DeskMate** — open **Workspace → Connectors** and click **Connect** on the tile.
+3. **OAuth handshake** — you'll be redirected to the provider, asked to sign in and consent, and bounced back to DeskMate.
+4. **Verify** — the connector tile turns green and shows "Connected".
+
+Two connectors need a small amount of pre-work because they require an Azure or Intuit developer flow: [Microsoft 365](/connectors/microsoft-365) and [QuickBooks Online](/connectors/quickbooks). The guides walk you through it.
+
+## What can go wrong (and how to spot it)
+
+| Symptom | Likely cause | Where to look |
+|---|---|---|
+| OAuth redirect URI mismatch | Wrong domain registered with the provider | Provider's app registration → Redirect URIs |
+| "Insufficient privileges" on Graph calls | Application permissions not admin-consented | Azure → Enterprise apps → Permissions |
+| Tokens keep expiring after one day | Missing `offline_access` scope | Reconnect from Workspace |
+| Connector shows green but skills can't read | Permission granted as Delegated, not Application | See provider-specific guide |
+
+If you're stuck, email <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a> with the connector name, the error message, and a screenshot. We can usually unblock you within a few hours.
+
+## Who can connect what
+
+By default only **workspace admins** can add or remove connectors. Regular users can use the connectors that are already set up. The admin/member split is configured in **Workspace → Users**.

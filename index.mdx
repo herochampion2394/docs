@@ -1,133 +1,47 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
-icon: 'star'
+title: "DeskMate"
+description: "A chat-first AI teammate that lives inside Teams and Slack."
+icon: "sparkles"
 ---
 
-## Setting up
+DeskMate is a chat-first AI teammate that lives inside Microsoft Teams or Slack and takes the repetitive work off your team — answering customer enquiries, chasing documents, pulling reports, reconciling data across your tools, and handling inbox triage — with a human approval rail on every action before anything goes out the door.
 
-Get your documentation site up and running in minutes.
+DeskMate connects to the systems your team already uses (Microsoft 365, Google Workspace, Xero, QuickBooks, MYOB, Attio, Mailchimp, and more), then works inside your chat as a teammate you can ask, delegate to, or build skills on top of.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Install DeskMate, connect your first tool, and run your first skill in under 15 minutes.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Connectors" icon="plug" href="/connectors/overview">
+    Step-by-step setup guides for every system DeskMate can read, write, and reason over.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Use it in Teams" icon="microsoft" href="/chat/teams">
+    Install the DeskMate bot into your Microsoft Teams workspace.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Use it in Slack" icon="slack" href="/chat/slack">
+    Add DeskMate to a Slack workspace and start chatting from any channel.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## How DeskMate works
 
-Everything you need to create world-class documentation.
+DeskMate is built on three layers:
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+**Connectors** are the secure links between DeskMate and your systems (Xero, M365, etc). They handle OAuth, tokens, and rate limits so you don't have to think about them after setup.
 
-## Make your content agent ready
+**Primitives** are the atomic actions DeskMate can perform — reading data, writing data, sending notifications, asking for approval, querying a knowledge base, and remembering context. Every connector exposes the same set of primitives, so a skill written once works across tools.
 
-Make your docs work for humans and AI agents alike.
+**Skills** are the multi-step workflows your team builds and runs. A skill can be as simple as "summarise this week's invoices" or as deep as "reconcile bank transactions and flag anything below 80% confidence for approval before posting."
 
-<Columns cols={2}>
-  <Card
-    title="Prompt component"
-    icon="robot"
-    href="/agent-ready/prompt"
-  >
-    Embed shareable AI prompts readers can copy or open in Cursor.
-  </Card>
-  <Card
-    title="Visibility"
-    icon="eye"
-    href="/agent-ready/visibility"
-  >
-    Show different content to humans and agents reading your docs.
-  </Card>
-  <Card
-    title="Contextual menu"
-    icon="bolt"
-    href="/agent-ready/contextual"
-  >
-    Give readers one-click access to Claude, ChatGPT, Cursor, and more.
-  </Card>
-  <Card
-    title="AI coding tools"
-    icon="wand-magic-sparkles"
-    href="/ai-tools/claude-code"
-  >
-    Set up Claude Code, Cursor, or Windsurf with Mintlify's skill.
-  </Card>
-</Columns>
+## What makes DeskMate different
 
-## Need inspiration?
+- **Chat-first, not dashboard-first.** Your team already lives in Teams and Slack. DeskMate works where they work.
+- **Human-in-the-loop by default.** Every action that touches a system of record can be gated by an approval — sent as an Adaptive Card directly into the chat.
+- **Multi-tenant and Australian-hosted.** Each workspace's data stays in its own boundary on Australian infrastructure.
+- **You own your skills.** Compose primitives into workflows in the Skill Builder, version them, share them across the team.
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
+## Get help
+
+<Card title="Email support" icon="envelope" href="mailto:support@brightpathaisolutions.com">
+  Reach us at <strong>support@brightpathaisolutions.com</strong>. We typically respond within one business day.
 </Card>

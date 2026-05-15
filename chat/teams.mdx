@@ -1,0 +1,100 @@
+---
+title: "Use DeskMate in Microsoft Teams"
+description: "Install the DeskMate bot in your Teams workspace."
+icon: "microsoft"
+---
+
+DeskMate works inside Microsoft Teams as a chat bot. Your team can `@mention` it in a channel or DM it directly. Replies include rich Adaptive Cards for approvals, search results, and file attachments.
+
+## Prerequisites
+
+You must have the [Microsoft 365 connector](/connectors/microsoft-365) set up first. The Teams bot can't function without it.
+
+## Step 1 — Receive the Teams manifest
+
+Your BrightPath account manager will send you a `.zip` file containing the DeskMate Teams app manifest. The same manifest works for every customer — DeskMate's bot is multi-tenant.
+
+## Step 2 — Install the app in Teams
+
+You can install at the **organisation** level (everyone gets the bot) or at the **personal** level (just you).
+
+### Organisation-wide install
+
+1. Sign in to <a href="https://admin.teams.microsoft.com" target="_blank">admin.teams.microsoft.com</a> as a Teams Administrator
+2. Go to **Teams apps → Manage apps**
+3. Click **+ Upload new app → Upload**
+4. Select the `.zip` file from Step 1
+5. Once uploaded, find **DeskMate** in the list and set **Status: Allowed**
+6. Optional: go to **Setup policies** to pin DeskMate to the Teams sidebar for everyone
+
+### Personal install (testing)
+
+1. In Teams, click **Apps** in the sidebar
+2. Click **Manage your apps → Upload an app → Upload a custom app**
+3. Select the `.zip` file from Step 1
+4. Click **Add**
+
+## Step 3 — Talk to the bot
+
+In any channel where DeskMate is installed, type:
+
+```
+@DeskMate hello
+```
+
+Or open a direct chat with DeskMate from the **Chat** sidebar.
+
+If you don't get a reply within ~5 seconds, see [Troubleshooting](#troubleshooting).
+
+## Features
+
+### Adaptive Cards
+
+Approvals, search results, and file attachments are rendered as **Adaptive Cards** — interactive cards with buttons. For example, an approval card lets you click **Approve** or **Reject** directly in chat without leaving Teams.
+
+### File uploads
+
+You can drag a file (PDF, DOCX, XLSX, CSV, image) into a chat with DeskMate. The bot will download it, parse it, and use it as context for whatever you ask next. Example:
+
+> *(drag in invoice.pdf)*
+>
+> What's the total amount and due date?
+
+### Switching LLM provider per user
+
+Each user can pick their own LLM provider for the bot:
+
+```
+/model gemini     ← use Google Gemini
+/model anthropic  ← use Claude
+/model openai     ← use GPT (default)
+/model reset      ← go back to the workspace default
+```
+
+This is per-user and persists across sessions.
+
+## Troubleshooting
+
+### Bot doesn't respond
+
+1. Check that the [Microsoft 365 connector](/connectors/microsoft-365) is green in DeskMate
+2. Check the Teams app is installed (Apps → Manage your apps → DeskMate should appear)
+3. Try `@DeskMate help` in a channel where it's installed
+
+If still no reply, email <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a> with your tenant slug and a screenshot.
+
+### "I couldn't create the meeting because the calendar account doesn't have enough permission"
+
+The Microsoft 365 admin granted permissions as **Delegated** only, not **Application**. See the Microsoft 365 connector [troubleshooting section](/connectors/microsoft-365#troubleshooting).
+
+### "Invalid AppId passed on token"
+
+The Teams manifest installed in your tenant references a different Azure App than DeskMate is currently configured to use. This usually means you have an old manifest. Ask your account manager for a refreshed `.zip`.
+
+### Adaptive Cards don't render
+
+Some Teams clients (older mobile versions) have limited Adaptive Card support. Update Teams to the latest version.
+
+## Uninstalling
+
+In Teams Admin Center → Teams apps → Manage apps → DeskMate → **Status: Blocked**. To fully remove, also delete the M365 connector in DeskMate and revoke the Enterprise application in Azure AD.

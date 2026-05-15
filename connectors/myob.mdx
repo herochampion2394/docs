@@ -1,0 +1,69 @@
+---
+title: "MYOB AccountRight"
+description: "Connect MYOB AccountRight for customers, invoices, and journal entries."
+icon: "dollar-sign"
+---
+
+The MYOB AccountRight connector gives DeskMate access to:
+
+- **Customers and suppliers** — read, create, update
+- **Sales invoices** — read, create
+- **Purchase bills** — read
+- **Journal entries** — read
+- **Accounts list (chart of accounts)** — read
+
+MYOB requires a MYOB account for OAuth — there's no developer console work for you on the MYOB side, but you do need an existing **MYOB AccountRight Live** subscription.
+
+## Prerequisites
+
+- An **AccountRight Live** subscription (the cloud version of MYOB AccountRight). Local-only AccountRight Classic files are not supported by MYOB's public API.
+- A `my.myob.com.au` (or `my.myob.com`) login with access to the company file you want to connect.
+
+## Connect
+
+1. In DeskMate, open **Workspace → Connectors**
+2. Click **Connect** on the **MYOB AccountRight** tile
+3. You'll be redirected to my.myob.com — sign in
+4. On the consent screen, click **Allow**
+5. Pick the **company file** you want DeskMate to access
+6. You're redirected back to DeskMate — the tile turns green
+
+## Verify it's working
+
+Try this in DeskMate chat:
+
+```
+show me the last 5 sales invoices
+```
+
+You should see results within a few seconds, with customer name, amount, and date.
+
+## Scopes requested
+
+DeskMate requests MYOB's standard `CompanyFile` scope, which covers all read and write operations against the chosen company file. If your team has multiple company files, you'll be asked to pick one during connect.
+
+## Multiple company files
+
+Each DeskMate workspace can connect to one MYOB company file. If you have multiple files (e.g. one per legal entity), connect each as its own DeskMate workspace.
+
+## The approval rail
+
+All **write** operations to MYOB — creating invoices, suppliers, customers — go through DeskMate's approval rail. Each proposed action is sent as an Adaptive Card and only applied after a human approves.
+
+## Troubleshooting
+
+### "Company file not found" after connecting
+
+Sometimes MYOB returns the company file list slowly after a fresh sign-in. Wait 30 seconds and retry — the file should appear in the consent picker.
+
+### "Unauthorized" on every read
+
+The connected MYOB user account doesn't have access to the company file you tried to pick. Check **Setup → User Access** inside the AccountRight desktop app and confirm the user has at least **Read-only** role.
+
+### Skills can read but not write
+
+The connected user has read-only access. Change their role in **Setup → User Access** to **Full Access** or a role that includes write permissions.
+
+## Disconnecting
+
+In **Workspace → Connectors**, click **Disconnect**. To revoke at the MYOB side, sign in at `my.myob.com` → **Manage my products** → revoke DeskMate.

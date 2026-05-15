@@ -1,0 +1,56 @@
+---
+title: "Slack"
+description: "Set up Slack as a chat surface for DeskMate."
+icon: "slack"
+---
+
+The Slack connector is what makes DeskMate available as a bot in your Slack workspace. Unlike the data connectors (Xero, M365, etc), Slack isn't a system DeskMate reads business data from — it's where your team **talks to** DeskMate.
+
+For installing DeskMate as a Slack app, see [Use DeskMate in Slack](/chat/slack). This page covers the underlying connector configuration.
+
+## What this connector stores
+
+When you install the Slack app in your workspace and the bot signs in:
+
+- **Bot token** — used to post messages, fetch user profiles, send DMs
+- **Workspace ID** — Slack's internal ID for your workspace
+- **Bot user ID** — used to suppress message loops where the bot would otherwise reply to its own messages
+
+You don't enter any of these manually. They're captured automatically when you install the Slack app.
+
+## User identity
+
+DeskMate maps each Slack user to their corresponding DeskMate user so that per-user analytics and per-user LLM provider preferences work consistently across Slack, Teams, and the web app.
+
+The mapping is done by looking up the Slack user's email (via `users.info`) and matching it to a DeskMate user with the same email. If no match is found, DeskMate creates a placeholder user on first message.
+
+## Permissions Slack requests
+
+| Slack scope | Why DeskMate needs it |
+|---|---|
+| `app_mentions:read` | See when someone `@mentions` DeskMate in a channel |
+| `chat:write` | Post replies as the bot |
+| `im:read`, `im:write`, `im:history` | Direct-message conversations |
+| `users:read`, `users:read.email` | Map Slack user → DeskMate user |
+| `files:read` | Read attachments users send to the bot |
+| `channels:history` | Read messages where the bot is added (channel context for skills) |
+
+We never request `channels:join`, `chat:write.customize`, or any admin scope. DeskMate cannot impersonate users or send messages as anyone other than itself.
+
+## Troubleshooting
+
+### Bot doesn't respond when @mentioned
+
+Most common cause: the bot hasn't been added to the channel. In Slack, type `/invite @DeskMate` in the channel.
+
+### Bot responds in DM but not in channels
+
+The `app_mentions:read` permission is missing — likely because the workspace was installed with an old manifest. Reinstall using the latest install link from your DeskMate account manager.
+
+### Replies appear from the wrong user
+
+Check that your DeskMate workspace's Slack connector is in fact connected to the Slack workspace you're posting in, not a different one. The bot token is workspace-scoped; if a previous install was to a different workspace, the token won't work in the new one. Disconnect and reinstall.
+
+## Disconnecting
+
+In **Workspace → Connectors**, click **Disconnect** on the Slack tile. To remove the bot from Slack entirely, a Slack admin should go to **Manage Apps → DeskMate → Remove app**.

@@ -1,0 +1,78 @@
+---
+title: "QuickBooks Online"
+description: "Connect QuickBooks Online for customers, invoices, expenses, and reports."
+icon: "dollar-sign"
+---
+
+The QuickBooks Online (QBO) connector gives DeskMate access to:
+
+- **Customers** — read, create, update
+- **Invoices** — read, create, send
+- **Expenses and bills** — read
+- **Items and accounts** — read
+- **Reports** — P&L, balance sheet, A/R aging
+
+Setup is one-click OAuth — no Intuit developer console work required.
+
+## Prerequisites
+
+- A QuickBooks Online subscription (any tier)
+- A user account with **Master Admin** or **Company Admin** role on the QBO company
+
+## Connect
+
+1. In DeskMate, open **Workspace → Connectors**
+2. Click **Connect** on the **QuickBooks Online** tile
+3. You'll be redirected to Intuit's sign-in
+4. Sign in and pick the company (QBO "realm") to grant DeskMate access to
+5. Click **Connect**
+6. You're redirected back to DeskMate — the tile turns green
+
+<Note>
+  QuickBooks calls each company a "realm" and gives it a numeric ID (the **realmId**). DeskMate captures this automatically during OAuth; you don't need to enter it.
+</Note>
+
+## Sandbox vs production
+
+DeskMate workspaces are configured against either **QuickBooks Sandbox** (for testing) or **QuickBooks Production**. Your account manager will tell you which one applies. If you're testing in sandbox before your go-live:
+
+- Sandbox companies live at `sandbox.qbo.intuit.com`
+- You'll need to create at least one sandbox company at <a href="https://developer.intuit.com/app/developer/sandbox" target="_blank">developer.intuit.com/app/developer/sandbox</a> before connecting
+
+When you go live, your DeskMate workspace gets re-pointed to production and you connect again to your real QBO company.
+
+## Verify it's working
+
+Try this in DeskMate chat:
+
+```
+list overdue invoices
+```
+
+You should see results within a few seconds.
+
+## The approval rail
+
+Like Xero, all **write** operations against QBO — creating invoices, posting bills, reconciling expenses — go through DeskMate's approval rail. Each proposed write is sent as an Adaptive Card to Teams or Slack and only applied after a human approves.
+
+## Troubleshooting
+
+### "Token expired" within an hour of connecting
+
+QuickBooks access tokens are short-lived (~1 hour) but DeskMate auto-refreshes using the refresh token. If you see expiry errors persistently, the most common cause is that **the refresh token wasn't saved**. Disconnect and reconnect.
+
+### "company is not in production" / "company is sandbox"
+
+Your DeskMate workspace is configured for the opposite environment from the company you're trying to connect. Email support to swap environments, or use a different QBO company.
+
+### "Invalid realmId" on every call
+
+Means OAuth didn't capture the realmId. This is rare but can happen if you cancel halfway through the consent screen. Disconnect and reconnect, and complete the consent fully.
+
+### Invoices created but PDFs look wrong
+
+PDF generation is Intuit's job, not DeskMate's. Check **Settings → Custom form styles** in QuickBooks Online.
+
+## Disconnecting
+
+In **Workspace → Connectors**, click **Disconnect**. To revoke at the Intuit side, go to **My Apps** at `appcenter.intuit.com/myapps` and disconnect DeskMate.

@@ -1,81 +1,75 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
-icon: 'rocket'
+description: "Get DeskMate working for your team in under 15 minutes."
+icon: "rocket"
 ---
 
-## Get started in three steps
+This guide walks you through the four steps to go from zero to a working DeskMate workspace.
 
-Get your documentation site running locally and make your first customization.
+## Step 1 — Receive your workspace
 
-### Step 1: Set up your local environment
+After your DeskMate workspace is provisioned, you'll receive an email with:
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+- Your workspace URL (e.g. `your-company.brightpathaisolutions.com`)
+- An invite link to set your admin password
 
-### Step 2: Deploy your changes
+Click the link, set a password, and sign in.
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+<Tip>
+  If you haven't received the email yet, ask your BrightPath account manager or contact <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a>.
+</Tip>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+## Step 2 — Connect your first tool
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+In the admin console, open **Workspace → Connectors**. You'll see a tile for every system DeskMate supports.
 
-### Step 3: Go live
+Click **Connect** on a tile (we recommend starting with Microsoft 365 or Google Workspace, since most other skills assume one of them is connected). You'll be redirected to the provider's sign-in page, asked to consent, and returned to DeskMate.
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+Each connector has its own setup guide — most are one-click OAuth, but a few (Microsoft 365, Xero, QuickBooks) need a small amount of work in the provider's admin console first. See [Connectors](/connectors/overview) for the full list.
 
-## Next steps
+## Step 3 — Install the chat bot
 
-Now that you have your docs running, explore these key features:
+DeskMate lives in chat. Pick the surface your team already uses:
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Microsoft Teams" icon="microsoft" href="/chat/teams">
+    One-click install via a Teams app manifest provided by BrightPath.
+  </Card>
+  <Card title="Slack" icon="slack" href="/chat/slack">
+    Add the DeskMate Slack app to your workspace.
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+Once installed, anyone in your organisation can message the bot directly or `@mention` it in a channel.
+
+## Step 4 — Run your first skill
+
+In the admin console, open **Skills**. You'll see a starter set of skills already enabled:
+
+- **Summarise this week's invoices** (requires Xero, QuickBooks, or MYOB)
+- **Find unanswered customer emails** (requires Microsoft 365 or Gmail)
+- **Draft a follow-up email** (requires Mail + CRM)
+- **Reconcile bank transactions** (requires accounting connector — generates an approval card)
+
+Click any skill and run it once from the web console to see the result. Then try it from Teams or Slack:
+
+```
+@DeskMate summarise this week's invoices
+```
+
+## Where to go next
+
+<CardGroup cols={2}>
+  <Card title="Connectors" icon="plug" href="/connectors/overview">
+    Set up each system DeskMate should read from or write to.
+  </Card>
+  <Card title="Chat in Teams" icon="microsoft" href="/chat/teams">
+    Install the bot in Microsoft Teams.
+  </Card>
+  <Card title="Chat in Slack" icon="slack" href="/chat/slack">
+    Install the bot in Slack.
+  </Card>
+  <Card title="Support" icon="envelope" href="mailto:support@brightpathaisolutions.com">
+    Email us at support@brightpathaisolutions.com — we typically respond within one business day.
+  </Card>
+</CardGroup>
