@@ -1,7 +1,7 @@
 ---
 title: "Microsoft 365"
 description: "Connect Outlook Mail, Calendar, OneDrive, SharePoint, and the Teams chat bot."
-icon: "microsoft"
+icon: "/images/connectors/microsoft.svg"
 ---
 
 The Microsoft 365 connector gives DeskMate access to:
@@ -90,7 +90,7 @@ The Microsoft 365 connector is required to use DeskMate in Teams, but the bot it
 
 The most common cause: an admin granted permissions as **Delegated** only, not as **Application**. Application permissions need an explicit admin-consent step (Step 2 above) and they show separately in Azure → Enterprise applications → DeskMate → Permissions.
 
-In the Azure portal, you should see two rows for each permission name — one of type `Delegated` and one of type `Application`. Both must show "Granted for {your tenant}". If the Application row is missing or not granted, re-run Step 2.
+In the Azure portal, you should see two rows for each permission name — one of type `Delegated` and one of type `Application`. Both must show `Granted for [your tenant]`. If the Application row is missing or not granted, re-run Step 2.
 
 ### Outbound replies in Teams return "Unauthorized"
 
