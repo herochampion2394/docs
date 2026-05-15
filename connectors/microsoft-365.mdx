@@ -27,10 +27,10 @@ DeskMate uses a single multi-tenant Azure application that we host. When you con
 In your browser, open:
 
 ```
-https://login.microsoftonline.com/<your-domain>/.well-known/openid-configuration
+https://login.microsoftonline.com/YOUR-DOMAIN/.well-known/openid-configuration
 ```
 
-Replace `<your-domain>` with your email domain (e.g. `contoso.com`). The JSON that loads contains a `token_endpoint` field — the GUID right after `login.microsoftonline.com/` is your Azure tenant ID.
+Replace `YOUR-DOMAIN` with your email domain (e.g. `contoso.com`). The JSON that loads contains a `token_endpoint` field — the GUID right after `login.microsoftonline.com/` is your Azure tenant ID.
 
 You'll need this GUID in Step 3. It looks like: `4d26fc6a-533e-45a9-993a-81072b013c6b`.
 

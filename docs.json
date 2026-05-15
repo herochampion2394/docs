@@ -3,11 +3,11 @@
   "theme": "mint",
   "name": "DeskMate by BrightPath",
   "colors": {
-    "primary": "#2563EB",
-    "light": "#3B82F6",
-    "dark": "#1E40AF"
+    "primary": "#F26B1F",
+    "light": "#FF8C5A",
+    "dark": "#D9550E"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
       {
@@ -61,8 +61,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
   },
   "navbar": {
     "links": [
