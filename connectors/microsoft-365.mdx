@@ -12,8 +12,6 @@ The Microsoft 365 connector gives DeskMate access to:
 - **SharePoint** — read and write files in sites
 - **Teams** — used by the DeskMate chat bot to receive messages and post replies (including Adaptive Cards)
 
-This is the connector most enterprise customers set up first, and the one with the most moving parts. Allow about 15 minutes the first time.
-
 ## What your Azure admin needs to do
 
 DeskMate uses a single multi-tenant Azure application that we host. When you connect, your Azure AD admin grants that application access to your tenant. They don't create a new app in Azure — they just consent to ours.
@@ -24,51 +22,36 @@ DeskMate uses a single multi-tenant Azure application that we host. When you con
 
 ### Step 1 — Find your Azure tenant ID
 
-In your browser, open:
+Sign in to the [Azure portal](https://portal.azure.com) as an administrator and go to **Microsoft Entra ID** (formerly Azure Active Directory). On the **Overview** page, copy the **Tenant ID** value.
 
-```
-https://login.microsoftonline.com/YOUR-DOMAIN/.well-known/openid-configuration
-```
+You'll need this GUID in Step 2. It looks like: `4d26fc6a-533e-45a9-993a-81072b013c6b`.
 
-Replace `YOUR-DOMAIN` with your email domain (e.g. `contoso.com`). The JSON that loads contains a `token_endpoint` field — the GUID right after `login.microsoftonline.com/` is your Azure tenant ID.
-
-You'll need this GUID in Step 3. It looks like: `4d26fc6a-533e-45a9-993a-81072b013c6b`.
-
-### Step 2 — Grant admin consent to DeskMate
-
-Your DeskMate account manager will provide a consent URL that looks like:
-
-```
-https://login.microsoftonline.com/<YOUR_TENANT_ID>/adminconsent?client_id=<DESKMATE_APP_ID>
-```
-
-Open this URL as a Microsoft 365 admin. You'll see a consent screen listing every permission DeskMate needs. Click **Accept**.
-
-The permissions granted are:
-
-| Permission | Type | Why |
-|---|---|---|
-| `User.Read.All` | Application | Resolve Teams users to email/profile |
-| `Mail.ReadWrite`, `Mail.Send` | Application + Delegated | Read inbox, send mail |
-| `Calendars.ReadWrite` | Application + Delegated | Read and create events |
-| `Files.ReadWrite.All` | Application + Delegated | OneDrive read/write |
-| `Sites.ReadWrite.All` | Application + Delegated | SharePoint read/write |
-| `Chat.ReadWrite` / `Chat.ReadWrite.All` | Application + Delegated | Teams chat read/write |
-| `offline_access` | Delegated | Refresh tokens so the user doesn't have to sign in daily |
-
-<Note>
-  Both **Application** and **Delegated** permissions matter and serve different purposes. Application permissions let DeskMate act *as itself* across the tenant (e.g. lookup any user's profile). Delegated permissions let DeskMate act *on behalf of a signed-in user* (e.g. read that specific user's mailbox).
-</Note>
-
-### Step 3 — Connect from DeskMate
+### Step 2 — Connect from DeskMate
 
 In your DeskMate workspace:
 
 1. Open **Workspace → Connectors**
 2. Click **Connect** on the **Microsoft 365** tile
 3. When prompted, enter your **Azure tenant ID** (the GUID from Step 1)
-4. Sign in with a Microsoft 365 admin account and consent
-5. The connector tile turns green — you're done
+4. Continue — DeskMate redirects you to Microsoft to sign in and grant consent (Step 3)
+
+### Step 3 — Grant admin consent to DeskMate
+
+After you enter your tenant ID and continue, DeskMate directs you to a Microsoft consent screen listing every permission DeskMate needs. Sign in as a Microsoft 365 admin and click **Accept**.
+
+The permissions granted are:
+
+| Permission | Why |
+|---|---|
+| `User.Read.All` | Resolve Teams users to email/profile |
+| `Mail.ReadWrite`, `Mail.Send` | Read inbox, send mail |
+| `Calendars.ReadWrite` | Read and create events |
+| `Files.ReadWrite.All` | OneDrive read/write |
+| `Sites.ReadWrite.All` | SharePoint read/write |
+| `Chat.ReadWrite` | Teams chat read/write |
+| `offline_access` | Refresh tokens so the user doesn't have to sign in daily |
+
+Once you accept, the connector tile turns green — you're done.
 
 ## Verify it's working
 
@@ -88,21 +71,7 @@ The Microsoft 365 connector is required to use DeskMate in Teams, but the bot it
 
 ### "Insufficient privileges to complete the operation" (403 from Graph)
 
-The most common cause: an admin granted permissions as **Delegated** only, not as **Application**. Application permissions need an explicit admin-consent step (Step 2 above) and they show separately in Azure → Enterprise applications → DeskMate → Permissions.
-
-In the Azure portal, you should see two rows for each permission name — one of type `Delegated` and one of type `Application`. Both must show `Granted for [your tenant]`. If the Application row is missing or not granted, re-run Step 2.
-
-### Outbound replies in Teams return "Unauthorized"
-
-Means the Bot Service auth is rejecting DeskMate's token. The most common cause is that the Teams bot manifest installed in your tenant is referencing a different Azure App ID than the one DeskMate uses. Email <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a> with a screenshot of the error — we'll send you a refreshed manifest.
-
-### "redirect_uri_mismatch"
-
-You're using a custom-domain DeskMate workspace and the redirect URI hasn't been added to the Azure app. Email support and include your workspace subdomain.
-
-### The connector connected but Outlook reads return nothing
-
-Check whether the user whose mailbox you're reading actually has a Microsoft 365 mailbox license. DeskMate can't read mail on an account without a mailbox.
+This usually means the action you tried isn't covered by the permissions DeskMate was granted during consent. Re-run the admin consent step (Step 3) and make sure every permission on the consent screen was accepted. If the error persists, that specific action may be outside DeskMate's current permission scope — email <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a>.
 
 ## Disconnecting
 

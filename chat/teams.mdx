@@ -44,7 +44,7 @@ In any channel where DeskMate is installed, type:
 
 Or open a direct chat with DeskMate from the **Chat** sidebar.
 
-If you don't get a reply within ~5 seconds, see [Troubleshooting](#troubleshooting).
+If you don't get a reply within ~5 seconds, email <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a> with your tenant slug and a screenshot.
 
 ## Features
 
@@ -59,41 +59,6 @@ You can drag a file (PDF, DOCX, XLSX, CSV, image) into a chat with DeskMate. The
 > *(drag in invoice.pdf)*
 >
 > What's the total amount and due date?
-
-### Switching LLM provider per user
-
-Each user can pick their own LLM provider for the bot:
-
-```
-/model gemini     ← use Google Gemini
-/model anthropic  ← use Claude
-/model openai     ← use GPT (default)
-/model reset      ← go back to the workspace default
-```
-
-This is per-user and persists across sessions.
-
-## Troubleshooting
-
-### Bot doesn't respond
-
-1. Check that the [Microsoft 365 connector](/connectors/microsoft-365) is green in DeskMate
-2. Check the Teams app is installed (Apps → Manage your apps → DeskMate should appear)
-3. Try `@DeskMate help` in a channel where it's installed
-
-If still no reply, email <a href="mailto:support@brightpathaisolutions.com">support@brightpathaisolutions.com</a> with your tenant slug and a screenshot.
-
-### "I couldn't create the meeting because the calendar account doesn't have enough permission"
-
-The Microsoft 365 admin granted permissions as **Delegated** only, not **Application**. See the Microsoft 365 connector [troubleshooting section](/connectors/microsoft-365#troubleshooting).
-
-### "Invalid AppId passed on token"
-
-The Teams manifest installed in your tenant references a different Azure App than DeskMate is currently configured to use. This usually means you have an old manifest. Ask your account manager for a refreshed `.zip`.
-
-### Adaptive Cards don't render
-
-Some Teams clients (older mobile versions) have limited Adaptive Card support. Update Teams to the latest version.
 
 ## Uninstalling
 
